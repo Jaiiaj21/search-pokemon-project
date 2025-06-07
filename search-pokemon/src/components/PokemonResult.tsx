@@ -1,22 +1,21 @@
-import { getClient } from "@/libs/apolloClient";
+
 import { GET_POKEMON_BY_NAME } from "@/graphql/queries";
-import { Pokemon } from "@/types/pokemon";
+import { Pokemon, PokemonQueryResponse } from "@/types/pokemon";
+import { useSuspenseQuery } from "@apollo/client";
 
 interface Props {
   name: string;
 }
 
-const PokemonResult: React.FC<Props> = async ({ name }) => {
+const PokemonResult: React.FC<Props> = ({ name }) => {
 
-  const { data, loading, error } = await getClient().query({
-    query: GET_POKEMON_BY_NAME,
+  const { data, error } = useSuspenseQuery<PokemonQueryResponse>(GET_POKEMON_BY_NAME, {
     variables: { name },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error || !data?.pokemon) return <p>Pokemon not found.</p>;
+  if (error) return <p>Pokemon not found.</p>;
 
-  const pokemon: Pokemon = data.pokemon;
+  const pokemon = data.pokemon
 
   console.log(pokemon, 'pokemon');
 

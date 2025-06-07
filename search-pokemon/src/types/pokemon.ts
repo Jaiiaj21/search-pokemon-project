@@ -49,7 +49,3 @@ export interface Evolution {
 export interface PokemonQueryResponse {
   pokemon: Pokemon;
 }
-
-export interface PokemonsQueryResponse {
-  pokemons: Pokemon[];
-}
