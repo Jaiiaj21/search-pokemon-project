@@ -41,18 +41,6 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
   }
 
   return (
-    // <div className="w-full flex justify-center items-center bg-black p-4">
-    //   <div className="w-1/3 bg-white rounded-xl">
-    //     <Image
-    //       src={pokemon.image}
-    //       alt="pokemon_image"
-    //       width={100}
-    //       height={100}
-    //       className="w-full h-full object-contain rounded-xl"
-    //     />
-    //   </div>
-
-    // </div>
     <div className="mx-auto p-4 w-full rounded-lg bg-gray-100">
       <h1 className="text-4xl font-bold text-center mb-8">
         {pokemon.name} <span className="text-neutral-500">#{pokemon.number}</span>
@@ -194,7 +182,7 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
                   />
                 </div>
                 <p className="font-semibold mb-2">
-                  {pokemon.name}
+                  {evolution.name}
                   <span className="text-neutral-500 ml-1">
                     #{evolution.number}
                   </span>
