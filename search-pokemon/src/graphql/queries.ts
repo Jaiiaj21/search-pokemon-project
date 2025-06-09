@@ -22,11 +22,28 @@ export const GET_POKEMON_BY_NAME = gql`
     maxCP
     maxHP
     image
+    attacks{
+      fast{
+        name
+        type
+        damage
+      }
+      special{
+        name
+        type
+        damage
+      }
+    }
     evolutions {
       id
       number
       name
       image
+      types
+    }
+    evolutionRequirements {
+      amount
+      name
     }
   }
 }

@@ -37,13 +37,13 @@ const PokemonContent = () => {
   }, [searchName])
 
   return (
-    <div className="bg-white rounded-lg p-8 max-w-2xl w-full">
+    <div className="bg-white rounded-lg p-8 max-w-[80%] w-full">
       <h1 className="text-4xl font-extrabold text-center text-purple-700 mb-8 tracking-tight">
         Pokemon Explorer
       </h1>
 
       {/* Search Input Component */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 mx-[15%]">
         <input
           type="text"
           placeholder="Enter Pokemon name (e.g., Pikachu)"
@@ -55,14 +55,16 @@ const PokemonContent = () => {
         />
         <button
           onClick={handleSearch}
-          className="w-full sm:w-auto px-8 py-4 bg-purple-600 text-white font-bold text-lg rounded-xl shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-400 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+          className="w-full sm:w-auto px-8 py-4 bg-purple-600 text-white font-bold text-lg rounded-xl shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-400 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 hover:cursor-pointer"
         >
           Search
         </button>
       </div>
 
       {/* Pokemon Result Component */}
-      {pokemonResultComponent}
+      <div className="w-full flex justify-center">
+        {pokemonResultComponent}
+      </div>
 
     </div>
   )

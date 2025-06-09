@@ -41,9 +41,10 @@ export interface EvolutionRequirement {
 
 export interface Evolution {
   id: string;
-  nuumber: string;
+  number: string;
   name: string;
   image: string;
+  types: string[];
 }
 
 export interface PokemonQueryResponse {
