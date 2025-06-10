@@ -1,5 +1,6 @@
 "use client"
 import { GET_POKEMON_BY_NAME } from "@/graphql/queries";
+import { hexToRgba } from "@/libs/colorUtils";
 import { PokemonElement, pokemonElementColor } from "@/libs/pokemon";
 import { Attack, Evolution, Pokemon, PokemonQueryResponse } from "@/types/pokemon";
 import { useSuspenseQuery } from "@apollo/client";
@@ -32,8 +33,9 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
   const pokemonElementComponent = (element: PokemonElement) => {
     return (
       <div
+        key={element}
         className="w-20 p-1 rounded-lg text-white text-shadow-[1px_1px_3px_black] text-center text-xs"
-        style={{ backgroundColor: `${pokemonElementColor[element]}` }} key={element}
+        style={{ backgroundColor: `${pokemonElementColor[element]}` }}
       >
         {element.toUpperCase()}
       </div>
@@ -41,20 +43,28 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
   }
 
   return (
-    <div className="mx-auto p-4 w-full rounded-lg bg-gray-100">
-      <h1 className="text-4xl font-bold text-center mb-8">
+    <div
+      className="mx-auto p-4 w-full rounded-lg bg-gray-100"
+      style={{
+        backgroundColor: hexToRgba(
+          pokemonElementColor[pokemon.types[0] as PokemonElement],
+          0.2
+        )
+      }}
+    >
+      <h1 className="text-4xl font-bold text-center mb-8 mt-4">
         {pokemon.name} <span className="text-neutral-500">#{pokemon.number}</span>
       </h1>
 
       <div className="flex flex-col md:flex-row gap-8 mb-8 ">
         {/* Image Section (Top Left) */}
-        <div className="w-full md:w-[40%] flex justify-center items-start">
+        <div className="w-full md:w-[30%] flex justify-center items-start">
           <Image
             src={pokemon.image}
             alt={pokemon.name}
             width={100}
             height={100}
-            className="w-full h-full object-contain rounded-xl shadow-md bg-white"
+            className="w-full h-full object-contain rounded-xl shadow-md bg-white p-5"
           />
         </div>
 
@@ -136,6 +146,7 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
             {pokemon.attacks.fast.length > 0 ? (
               <ul className="ml-2">
                 {pokemon.attacks.fast.map((attack: Attack, index: number) => (
+                  attack.name && attack.damage && attack.type &&
                   <li key={index} className="flex gap-2 mb-1">
                     {attack.name} {pokemonElementComponent(attack.type as PokemonElement)} - Damage: {attack.damage}
                   </li>
@@ -150,6 +161,7 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
             {pokemon.attacks.special.length > 0 ? (
               <ul className="ml-2">
                 {pokemon.attacks.special.map((attack: Attack, index: number) => (
+                  attack.name && attack.damage && attack.type &&
                   <li key={index} className="flex gap-2 mb-1">
                     {attack.name} {pokemonElementComponent(attack.type as PokemonElement)} - Damage: {attack.damage}
                   </li>
