@@ -1,9 +1,10 @@
 "use client"
+import Loading from "@/components/Loading";
 import { GET_POKEMON_BY_NAME } from "@/graphql/queries";
 import { hexToRgba } from "@/libs/colorUtils";
 import { PokemonElement, pokemonElementColor } from "@/libs/pokemon";
-import { Attack, Evolution, Pokemon, PokemonQueryResponse } from "@/types/pokemon";
-import { useSuspenseQuery } from "@apollo/client";
+import { Attack, Evolution, PokemonQueryResponse } from "@/types/pokemon";
+import { useQuery } from "@apollo/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -15,20 +16,20 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
 
   const router = useRouter();
 
-  const { data, error } = useSuspenseQuery<PokemonQueryResponse>(GET_POKEMON_BY_NAME, {
-    variables: { name },
+  const { data, error, loading } = useQuery<PokemonQueryResponse>(GET_POKEMON_BY_NAME, {
+    variables: { name }
   });
-
-  if (error) return <p>Pokemon not found.</p>;
-
-  const pokemon = data.pokemon
 
   const handleEvolutionClick = (name: string): void => {
     router.push(`/?name=${name}`);
   }
 
-  console.log(pokemon, 'pokemon');
-  if (!pokemon) return <p>No Pokémon found.</p>;
+  if (loading) return <Loading />
+  if (error || !data) return <p className="text-red-500 my-4">Failed to load Pokémon. Please try again later.</p>;
+
+  const pokemon = data.pokemon;
+
+  if (!pokemon) return <p className="text-red-500 my-4">No Pokémon Matched Your Search!</p>;
 
   const pokemonElementComponent = (element: PokemonElement) => {
     return (
@@ -64,7 +65,7 @@ const PokemonResult: React.FC<Props> = ({ name }) => {
             alt={pokemon.name}
             width={100}
             height={100}
-            className="w-full h-full object-contain rounded-xl shadow-md bg-white p-5"
+            className="w-full h-full object-contain rounded-xl shadow-md bg-white p-10"
           />
         </div>
 

@@ -1,4 +1,5 @@
 "use client"
+import Loading from "@/components/Loading";
 import PokemonResult from "@/components/PokemonResult";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -28,17 +29,7 @@ const PokemonContent = () => {
     return (
       <>
         {searchName &&
-          <Suspense fallback={
-            <div className="my-4">
-              <Image
-                src={'/pokeball_loading.png'}
-                alt="loading..."
-                width={30}
-                height={30}
-                className="animate-spin"
-              />
-            </div>
-          }>
+          <Suspense fallback={<Loading />}>
             <PokemonResult name={searchName} />
           </Suspense>
         }
@@ -48,8 +39,14 @@ const PokemonContent = () => {
 
   return (
     <div className="bg-white rounded-lg p-8 md:max-w-[80%] w-full mt-8 shadow-xl">
-      <h1 className="text-4xl font-extrabold text-center mb-8 tracking-tight text-zinc-500">
-        Pokemon Explorer
+      <h1 className="text-4xl font-extrabold mb-8 tracking-tight text-zinc-500 flex gap-4 w-full justify-center items-center">
+        <Image
+          src={'/pokeball_highlight.png'}
+          alt="icon"
+          width={30}
+          height={30}
+        />
+        Pokémon Explorer
       </h1>
 
       {/* Search Input Component */}
@@ -65,6 +62,7 @@ const PokemonContent = () => {
         />
         <button
           onClick={handleSearch}
+          disabled={!searchInput}
           className="w-full sm:w-auto px-8 py-4 bg-zinc-500 text-white font-bold text-lg rounded-xl shadow-lg hover:bg-zinc-700 focus:outline-none focus:ring-4 focus:ring-zinc-400 transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 hover:cursor-pointer"
         >
           Search
